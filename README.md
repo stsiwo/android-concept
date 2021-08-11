@@ -11,13 +11,14 @@ there are specific constraints for android app:
 ## architecture
 
 1. separation of concerns: don't put all logic (application, ui, infrastructure) into Activity or Fragment class.
-  -  minimize your dependency on Activity/Fragment for better UX, manageable app and maintatenance experience.
+
+- minimize your dependency on Activity/Fragment for better UX, manageable app and maintatenance experience.
 
 2. drive UI from model (persistent)
-  - because of memory pressure (users don't lose data if the OS destroy the app)
-  - becauese of no network connection (the app continue to work)
 
-  - model: a class what is responsibile for managing the data
+- because of memory pressure (users don't lose data if the OS destroy the app)
+- becauese of no network connection (the app continue to work)
+- model: a class what is responsibile for managing the data
 
 
 ### recommended app architecture
@@ -610,5 +611,13 @@ you can use a library for the feature: https://stackoverflow.com/questions/45834
 
 - Using an intent filter isn't a secure way to prevent other apps from starting your components. Although intent filters restrict a component to respond to only certain kinds of implicit intents, another app can potentially start your app component by using an explicit intent if the developer determines your component names. If it's important that only your own app is able to start one of your components, do not declare intent filters in your manifest. Instead, set the exported attribute to "false" for that component. Similarly, to avoid inadvertently running a different app's Service, always use an explicit intent to start your own service.
 
-- 
+## Performance
+  
+### Goal
+  
+  1. use power sparingly
+  2. start up quickly
+  3. respond quickly to user interaction
+  
+### 
 
