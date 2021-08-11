@@ -291,12 +291,6 @@ IPC/Binder: allows applictions to communicate with each other and it is the base
 
 Binder Transaction: a message exchanged with Binder
 
-## Android 
-
-### Deep Link
-
-??
-
 ## App Components
 
 the essential building blocks of an Android app.
@@ -612,6 +606,21 @@ pull a ui component and it cause to refresh the items.
 
 you can use a library for the feature: https://stackoverflow.com/questions/4583484/how-to-implement-android-pull-to-refresh
 
+### Deep Link
+   
+   in nutshell, guide users to an activity on the deeper hierarchy of your app without openinig home page and navigate to the page. 
+
+   a concept that help users navigate between the web and applications. 
+
+   a url which navigate users directly to the specific content in applications.
+   
+   ref: https://www.youtube.com/watch?v=XJgPIeolJu8&ab_channel=AndroidDevelopers
+   
+### Android App Link 
+   
+   allow an app to designate itself as the default handler of application domain or URL. (API Level 23 or higher)
+
+   
 ## Security
 
 - Using an intent filter isn't a secure way to prevent other apps from starting your components. Although intent filters restrict a component to respond to only certain kinds of implicit intents, another app can potentially start your app component by using an explicit intent if the developer determines your component names. If it's important that only your own app is able to start one of your components, do not declare intent filters in your manifest. Instead, set the exported attribute to "false" for that component. Similarly, to avoid inadvertently running a different app's Service, always use an explicit intent to start your own service.
@@ -624,5 +633,12 @@ you can use a library for the feature: https://stackoverflow.com/questions/45834
   2. start up quickly
   3. respond quickly to user interaction
   
-### 
+### Layout
+   
+#### optimize layout hierarchy
 
+- __nested LinearLayout__ causes performance issue (slow down) to make it flatten with RelativeLayout.
+   
+- __layout_weight in teh LinearLayout__ slow down the speed of measurement.
+   
+- __use Lint__ to search for possible view hierarchy optimizations. 
