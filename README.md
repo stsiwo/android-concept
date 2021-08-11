@@ -8,67 +8,71 @@ there are specific constraints for android app:
 - any component should not depend on each other (multiple entry point and out-of-order)
 - shouldn't store any app data or state in your app components (cannot control when your component is destroyed because of memory pressure and user want to kill)
 
-## architecture
+## Architecture
 
-1. separation of concerns: don't put all logic (application, ui, infrastructure) into Activity or Fragment class.
+1. __separation of concerns__: don't put all logic (application, ui, infrastructure) into Activity or Fragment class.
 
-- minimize your dependency on Activity/Fragment for better UX, manageable app and maintatenance experience.
+   minimize your dependency on Activity/Fragment for better UX, manageable app and maintatenance experience.
 
-2. drive UI from model (persistent)
+2. __drive UI from model (persistent)__
 
 - because of memory pressure (users don't lose data if the OS destroy the app)
 - becauese of no network connection (the app continue to work)
 - model: a class what is responsibile for managing the data
 
+### Recommended App Architecture
 
-### recommended app architecture
+1. __Activity/Fragment (Controller)__
+2. __ViewModel (Application)__
+   
+   __LiveData__
 
-1. Activity/Fragment (Controller)
-2. ViewModel (Application)
-  - LiveData 3
-3. Repository (Infra)
-4. Model (Infra)
-  - Room
-5. Remote Data Source (Infra)
-  - Retrofit
+3. __Repository (Infra)__
+4. __Model (Infra)__
 
-each component depends only on the component one level below it. this createa a consistent and pleasant user expereience.
+   __Room__
+
+5. __Remote Data Source (Infra)__
+
+   __Retrofit__
+
+   each component depends only on the component one level below it. this createa a consistent and pleasant user expereience.
 
 #### Fragment
 
-a partial UI and a subset of Activity.
+   a partial UI and a subset of Activity.
 
 #### Activity
 
-a whole screen and often contain multiple Fragments.
+   a whole screen and often contain multiple Fragments.
 
 #### ViewModel
 
-provides the data for a specific UI component, such as a fragment or activity, and contains data-handling business logic to communicate with the model.
+   provides the data for a specific UI component, such as a fragment or activity, and contains data-handling business logic to communicate with the model.
 
-doesn't know about UI Components (good polymorphism: dependency does not need to know who is my dependee and vise versa) so it __isn't affected by configuration changes__, such as recreating an activity when rotating the device. 
+   doesn't know about UI Components (good polymorphism: dependency does not need to know who is my dependee and vise versa) so it __isn't affected by configuration changes__, such as recreating an activity when rotating the device. 
 
-__manage any ansyc calls__ instead of UI controllers (Activity & Fragment). if UI controllers manage this, it might waste of resource since it might call async when re-creation but data is already fetch previous creation.
+   __manage any ansyc calls__ instead of UI controllers (Activity & Fragment). if UI controllers manage this, it might waste of resource since it might call async when re-creation but data is already fetch previous creation.
 
-with lifecycle conscious
+   with lifecycle conscious
 
-onCreate at the 2nd times on an activity return the same ViewModel object.
+   onCreate at the 2nd times on an activity return the same ViewModel object.
 
-when an activity finish its work, it also call 'onCleared' method on its related ViewModel for cleanup.
+   when an activity finish its work, it also call 'onCleared' method on its related ViewModel for cleanup.
 
-__never reference a view, Lifecycle, or any class that may hold a rerence to the activity context__. ?? __why?__
+   __never reference a view, Lifecycle, or any class that may hold a rerence to the activity context__. ?? __why?__
 
-scoped to the Lifecycle object passed to the ViewModelProvider.
+   scoped to the Lifecycle object passed to the ViewModelProvider.
 
-use share the data to multiple Fragments on the activity.
+   use share the data to multiple Fragments on the activity.
 
-__SavedState__ allows ViewModel to access the saved state and arguments of the associated Fragment or Activity.
+   __SavedState__ allows ViewModel to access the saved state and arguments of the associated Fragment or Activity.
 
 ##### Coroutines 
 
-__coroutines__: a library that enables yo to write asynchronous code.
+   a library that enables yo to write asynchronous code.
 
-- you can define its scopes when your coroutines should run:
+   you can define its scopes when your coroutines should run:
 
   - ViewModelScope: the scope is the same as ViewModel. the coroutine is cancel when the ViewModel is cleared.
   - Lifecycle: the scope is te same as Lifecycle. teh corutine is cancel when the Lifecycle is destroyed.
@@ -76,13 +80,14 @@ __coroutines__: a library that enables yo to write asynchronous code.
     - every time the lifecycle enter one state and leaves other state
   - whenCreated, WhenStartd, WhenResume: to suspend asycn execution unless the Lifecycle is in a certain state.
 
-- prefer repeatOnlifeCycle (cancel) over whenX or launchWhenX (suspension) since supension cause its state active in the background, potentially emitting new items and wasting resources.
+   prefer repeatOnlifeCycle (cancel) over whenX or launchWhenX (suspension) since supension cause its state active in the background, potentially emitting new items and wasting resources.
 
-- structured concurrency: how to handle related multiple coroutine (parent and child) with a scope
+   structured concurrency: how to handle related multiple coroutine (parent and child) with a scope
+  
   - need to properly manage (start and cancel) multiple coroutine related each other with a scope. if the scope is cleared, we need to cancel the all related coroutines.
   - see this: https://elizarov.medium.com/structured-concurrency-722d765aa952
 
-- use 'emit(..)' to return the result from async code
+   use 'emit(..)' to return the result from async code
 
 ##### Keep UI Sync with Persistent Storage
 
