@@ -1,7 +1,5 @@
 # Android & Kotlin Basic Guide
 
-# Andorid & Kotlin
-
 ## Constraint
 
 there are specific constraints for android app:
