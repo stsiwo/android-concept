@@ -16,6 +16,7 @@
 - [ ] Deep Link
 - [X] Open another app
 - [X] LiveData
+- [X] TextWatcher
 - [ ] Intent and Intent Filter
 - [X] ConstraintLayout (Responsive UI)
 - [ ] MotionLayout (add motion to your layout)
