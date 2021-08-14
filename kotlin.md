@@ -165,9 +165,91 @@ might run on different thread. a coroutine does not bound to a spcific thread.
 
 a light-weight version of threads
 
-## runBlocking
+### suspending function
 
-a coroutine builder that bridges the non-coroutine world of a regular function
+a function with _suspend_ keyword. you can use this function inside a coroutine.
+
+## dispatcher
+
+decide which thread or threads the corrsponding coroutine uses to execute its execution. for example, it can confine a given execution to be run on a specific thread, send it to thread pool, or run on the main thread.
+
+### default (Dispatchers.Default)
+
+limited to the number of CPU cores (with a minimum of 2) so only N (where N == cpu cores) tasks can run in parallel in this dispatcher.
+
+is intended for CPU intensive tasks, where there is little or no sleep.
+
+### IO (Dispatcher.IO)
+
+by default 64 threads, so there could be up to 64 parallel tasks running on that dispatcher.
+
+spends a lot of time waiting.
+
+### coroutineScope
+
+a coroutine builder that can be used inside any suspending function to peform multiple concurrent operations. 
+
+```
+// Sequentially executes doWorld followed by "Done"
+fun main() = runBlocking {
+    doWorld()
+    println("Done") // 4
+}
+
+// Concurrently executes both sections
+suspend fun doWorld() = coroutineScope { // this: CoroutineScope and allow you to run multiple coroutine concurrently
+// but main thread is blocked until this is done.
+    launch { // run a different thread
+        delay(2000L)
+        println("World 2") // 3
+    }
+    launch { // run another different thread
+        delay(1000L)
+        println("World 1") // 2
+    }
+    println("Hello") // 1
+}
+```
+
+### runBlocking
+
+a coroutine builder that bridges the non-coroutine world of a regular function, so should not be called from a coroutine. 
+
+this block the code inside until the execution inside that is completed.
+
+you usually dont use this in production. 
+
+### Job object
+
+a handle to the launched coroutine and you can explicitly wait for its completion (e.g., 'join()')
+
+```
+val job = launch { // launch a new coroutine and keep a reference to its Job
+    delay(1000L)
+    println("World!")
+}
+println("Hello")
+job.join() // wait until child coroutine completes
+println("Done") 
+```
+
+also, you can cancel a coroutine with _cancel()_ of the Job object.
+
+but if a coroutine is working in a computation and does not check for cancellation, it cannot be cancelled.
+
+## coordinate multiple coroutines
+
+use _async_ keyword to coordinate multiple coroutine sequentially.
+
+```
+val time = measureTimeMillis {
+    val one = async { doSomethingUsefulOne() }
+    val two = async { doSomethingUsefulTwo() }
+    println("The answer is ${one.await() + two.await()}")
+}
+println("Completed in $time ms")
+```
+
 
 ## package-level functions
 
