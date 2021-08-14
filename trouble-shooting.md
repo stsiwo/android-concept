@@ -15,4 +15,9 @@ ref: https://stackoverflow.com/questions/44328225/cant-change-emulated-performan
 
 ### Automatically Add Components to Manifest?
 
-no. you do it manually.
+Yes. create an activity from Project in Android Studio and choose existing Activity such as Empty Activity. this automatically add the activity in Manifest.
+
+### A file corrupted before Git commit. Is there any way to recover the file?
+
+right click the file and select _local history_. you might be able to get local history. 
+
