@@ -17,6 +17,9 @@
 - [X] Open another app
 - [X] LiveData
 - [X] TextWatcher
+
+   ref: https://stackoverflow.com/questions/40569436/kotlin-addtextchangelistener-lambda
+
 - [ ] Intent and Intent Filter
 - [X] ConstraintLayout (Responsive UI)
 - [ ] MotionLayout (add motion to your layout)
