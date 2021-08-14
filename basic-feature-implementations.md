@@ -1,10 +1,17 @@
 # Basic Feature Implementations
 
+- [X] add an event lister to a UI element
+
+   steps) use _findViewById_ and get the target element and add _setOnXXXListener_ with its handler. 
+
+   How to organize event listenrs? should I put in UI components or ViewModel?
+
+- [ ] create a link to another activity
 - [ ] Navigation
 - [ ] Deep Link
 - [ ] Open another app
 - [ ] Intent and Intent Filter
-- [ ] ConstraintLayout (Responsive UI)
+- [X] ConstraintLayout (Responsive UI)
 - [ ] MotionLayout (add motion to your layout)
 - [ ] RecyclerView
 - [ ] CardView (similar layout for list items)
