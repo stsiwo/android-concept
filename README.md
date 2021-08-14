@@ -586,6 +586,20 @@ a short string that you include in the name of your resource directories to defi
 ex) portrait orientation: use that resource 
     landscap orientation: use this resource 
 
+## Services (In Depth)
+   
+an application component that can perform long-running operations in the background. 
+   
+no user interface.
+   
+a service does not create a separate thread automaitcally. this is your responsibility. Otherwise, you get Application Not Responding (ANR) error when blocking operation on the main thread.
+   
+### Types
+   
+#### Foreground
+   
+
+   
 ## Kotlin
 
 a programming lanaguage which Kotlin Application Deployment is faster to compile, lightweight, and prevents applications from increasing size. Any chunk of code written in Kotlin is much smaller compared to Java, as it is less verbose and less code means fewer bugs. Kotlin compiles the code to a bytecode which can be executed in the JVM.
@@ -642,3 +656,8 @@ you can use a library for the feature: https://stackoverflow.com/questions/45834
 - __layout_weight in teh LinearLayout__ slow down the speed of measurement.
    
 - __use Lint__ to search for possible view hierarchy optimizations. 
+
+- use __ConstraintsLayout__ rather than Relative/LinearLayout to avoid nested deep view tree
+   
+
+   
