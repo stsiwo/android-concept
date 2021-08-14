@@ -646,6 +646,24 @@ an interruption by a phone call or notification and resume the process of the or
 
 OS might kill some app processes to make room for new ones at any time.
 
+## Android
+   
+## UI Thread (Main Thread)
+   
+## Annotation
+   
+### @WorkerThread
+
+denotes that the target method/class should be called on a background thread. Otherwise, it throws the exception. 
+   
+__you still need to do threading such as creating corouting manually. this annotation does not create a new thread automatically.__
+   
+### @UIThread
+   
+denotes that the target method/class should be called on a main thread. Otherwise, it throws the exception. 
+      
+a thread to run your app.
+   
 ## Android UI Features
 
 ### pull-to-refresh
