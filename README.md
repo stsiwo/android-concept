@@ -68,27 +68,6 @@ there are specific constraints for android app:
 
    __SavedState__ allows ViewModel to access the saved state and arguments of the associated Fragment or Activity.
 
-##### Coroutines 
-
-   a library that enables yo to write asynchronous code.
-
-   you can define its scopes when your coroutines should run:
-
-  - ViewModelScope: the scope is the same as ViewModel. the coroutine is cancel when the ViewModel is cleared.
-  - Lifecycle: the scope is te same as Lifecycle. teh corutine is cancel when the Lifecycle is destroyed.
-  - repeatOnLifecycle: start your async code and cancel it at a certain lifecycle state (e.g., start your async at STARTED and cancel it at STOPPED)
-    - every time the lifecycle enter one state and leaves other state
-  - whenCreated, WhenStartd, WhenResume: to suspend asycn execution unless the Lifecycle is in a certain state.
-
-   prefer repeatOnlifeCycle (cancel) over whenX or launchWhenX (suspension) since supension cause its state active in the background, potentially emitting new items and wasting resources.
-
-   structured concurrency: how to handle related multiple coroutine (parent and child) with a scope
-  
-  - need to properly manage (start and cancel) multiple coroutine related each other with a scope. if the scope is cleared, we need to cancel the all related coroutines.
-  - see this: https://elizarov.medium.com/structured-concurrency-722d765aa952
-
-   use 'emit(..)' to return the result from async code
-
 ##### Keep UI Sync with Persistent Storage
 
 use Room and LiveData
@@ -649,6 +628,8 @@ OS might kill some app processes to make room for new ones at any time.
 ## Android
    
 ## UI Thread (Main Thread)
+
+a thread to run your app.
    
 ## Annotation
    
@@ -662,8 +643,36 @@ __you still need to do threading such as creating corouting manually. this annot
    
 denotes that the target method/class should be called on a main thread. Otherwise, it throws the exception. 
       
-a thread to run your app.
+## Coroutines 
+
+a library that enables yo to write asynchronous code.
+
+kotlin itsself does not have _async_ and _await_ keyword, but provide _suspend_ to accomplish the async. 
    
+_kotlinx.coroutines_ (a rich library for coroutine) provide a number of high-level coroutine-enabled primitives including _launch_, _async_ and others.
+   
+you can define its scopes when your coroutines should run:
+
+- ViewModelScope: the scope is the same as ViewModel. the coroutine is cancel when the ViewModel is cleared.
+- Lifecycle: the scope is te same as Lifecycle. teh corutine is cancel when the Lifecycle is destroyed.
+- repeatOnLifecycle: start your async code and cancel it at a certain lifecycle state (e.g., start your async at STARTED and cancel it at STOPPED)
+ - every time the lifecycle enter one state and leaves other state
+- whenCreated, WhenStartd, WhenResume: to suspend asycn execution unless the Lifecycle is in a certain state.
+
+prefer repeatOnlifeCycle (cancel) over whenX or launchWhenX (suspension) since supension cause its state active in the background, potentially emitting new items and wasting resources.
+
+structured concurrency: how to handle related multiple coroutine (parent and child) with a scope
+
+- need to properly manage (start and cancel) multiple coroutine related each other with a scope. if the scope is cleared, we need to cancel the all related coroutines.
+- see this: https://elizarov.medium.com/structured-concurrency-722d765aa952
+
+use 'emit(..)' to return the result from async code
+
+__dispatcher__: decide which thread or threads the corrsponding coroutine uses to execute its execution. for example, it can confine a given execution to be run on a specific thread, send it to thread pool, or run on the main thread.
+   
+Because coroutines can easily switch threads at any time and pass results back to the original thread, it's a good idea to start UI-related coroutines on the Main thread.
+  
+ 
 ## Android UI Features
 
 ### pull-to-refresh
