@@ -598,6 +598,40 @@ a service does not create a separate thread automaitcally. this is your responsi
    
 #### Foreground
    
+a service which is noticable to users. 
+   
+must display notification to users.
+   
+continue working even if users are not interacting with the app. 
+   
+__most of the time, you should use WorkManager (scheduled task manager) to manage the foreground task___.
+   
+#### Background
+   
+a service which is not noticable to users.
+   
+there are some restriction when running a background service. for example, API Level 26 or higher, a background service cannot access the location of user. so you should use __WorkManager__ for bacground service also.
+   
+#### Bound 
+   
+a service which is bound to an app component.
+   
+the bound app component can interact with the service such as send a request, receive the result, or IPC. 
+   
+the lifecyle of the service is the same as the bound app component. when the component is destroyed, the service also destroyed.
+   
+### Service vs Thread
+   
+__services__: 
+   
+   - by default, run at the main thread, but you can run the service at different thread if your service is intensive/blocking operation.
+   - use when you need to run a service at the backround while users are not interacting with the app.
+   
+__thread__:
+   
+   - run rather than the main thread.
+   - only run while its corrsponding app is active.
+   
 
    
 ## Kotlin
