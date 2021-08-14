@@ -21,3 +21,6 @@ Yes. create an activity from Project in Android Studio and choose existing Activ
 
 right click the file and select _local history_. you might be able to get local history. 
 
+### Emulator does not show my layout even if addding some element.
+
+make sure you create an layout file along with the activity by choosing existing Activity template such as Empty Activity. this will also create the layout file automatically.
