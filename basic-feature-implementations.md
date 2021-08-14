@@ -4,12 +4,18 @@
 
    steps) use _findViewById_ and get the target element and add _setOnXXXListener_ with its handler. 
 
-   How to organize event listenrs? should I put in UI components or ViewModel?
+   _How to organize event listenrs? should I put in UI components or ViewModel?_ Should be inside UI components since event listeners is a UI concern. 
+   
+   ref: https://medium.com/@CodyEngel/4-ways-to-implement-onclicklistener-on-android-9b956cbd2928
+   ref (kotlin): https://stackoverflow.com/questions/44301301/android-how-to-achieve-setonclicklistener-in-kotlin
+   ref (best way): create an event handler at an activity and put the name on _onClick_ attribute on the layout https://developer.android.com/training/basics/firstapp/starting-activity
+   
 
-- [ ] create a link to another activity
+- [X] create a link to another activity
 - [ ] Navigation
 - [ ] Deep Link
-- [ ] Open another app
+- [X] Open another app
+- [X] LiveData
 - [ ] Intent and Intent Filter
 - [X] ConstraintLayout (Responsive UI)
 - [ ] MotionLayout (add motion to your layout)
@@ -42,3 +48,4 @@
 - [ ] app bar (IMPORTANT: your top menu bar) 
 - [ ] system bars (the top and the bottom black bar)
 - [ ] Swipe
+
