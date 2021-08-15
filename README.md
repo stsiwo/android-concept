@@ -137,6 +137,8 @@ an object-mapping library that provides local data persistence with minimal boil
 
 it has annotaiton like @Entity (oh i miss Hibernate...), @PrimaryKey, @Database, and so on.
 
+provide main-safety automatically with coroutine so you don't need to handle coroutines on your own.
+
 #####  __data acess object (DAO)__
 
 an abstraction of data persistence. this is a lower-level concept, closer to teh storage systems.
@@ -151,13 +153,32 @@ define basic method like 'save', 'update', 'load'
 
 ##### Flow with Room
 
-allows you to get live udpates. This means that every time there's a change in the user table, a new User will be emitted.
-
-
+allows you to get live udpates. This means that every time there's a change in the user table, a new User will be emitted. called _observable data source_.
 
 #### Retrofit (library)
 
-use to fetch data from a API.
+use to fetch data from a API. technically, it is an API adapter wrapped over okHTTP (API fetching library) to map HTTP API endpoints to Java/Kotlin interface.
+
+ex)
+```
+public interface GitHubService {
+  @GET("users/{user}/repos") // your endpoint
+  Call<List<Repo>> listRepos(@Path("user") String user); // a method to request to the endpoint
+}
+
+// config
+Retrofit retrofit = new Retrofit.Builder()
+    .baseUrl("https://api.github.com/")
+    .build();
+
+// create a service based on the interface
+GitHubService service = retrofit.create(GitHubService.class);
+
+// now you can request and grab the result of Java/Kotlin object
+Call<List<Repo>> repos = service.listRepos("octocat");
+```
+
+provide main-safety automatically with coroutine so you don't need to handle coroutines on your own.
 
 #### network status handling
 
@@ -630,6 +651,8 @@ OS might kill some app processes to make room for new ones at any time.
 ## UI Thread (Main Thread)
 
 a thread to run your app.
+   
+__main-safety__: it doesn't block UI updates on the main thread.
    
 ## Annotation
    
