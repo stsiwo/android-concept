@@ -138,7 +138,7 @@ default class scope, any members/behaviors are visible to the outside.
 
 a function which can be paused and resumed later time (async).
 
-it can be invoked by only another suspend function or inside the coroutine.
+it can be invoked by __only another suspend function or inside the coroutine__.
 
 useful when you want to abstract an async logic inside the function from 'runBlock' 
 
@@ -261,7 +261,9 @@ val time = measureTimeMillis {
 }
 println("Completed in $time ms")
 ```
-
+### Testing With Coroutines
+    
+use _runBlockingTest_ to test coroutines since this will block the main thread (testing) until the coroutine is completed. Also, you cannot call suspending functions from regular context. it is only called inside coroutines or another suspending function.
 
 ## package-level functions
 
@@ -725,6 +727,8 @@ convert a recursive method to a loop for performance gain. (esp function call is
 ## Higher-order functions
 
 a function that takes functions as parameters, or returns a function.
+    
+used to generalize application logic such as loading spinner. you can think it as the same as the HOC in React. extract application logic and reuse for any component.
 
 ## inline functions
 
