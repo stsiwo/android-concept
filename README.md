@@ -48,6 +48,11 @@ there are specific constraints for android app:
 
 #### ViewModel
 
+   main responsibility)
+   
+   1. provide necessary data to the view.
+   2. prepare the data by communicating with the model.
+
    provides the data for a specific UI component, such as a fragment or activity, and contains data-handling business logic to communicate with the model.
 
    doesn't know about UI Components (good polymorphism: dependency does not need to know who is my dependee and vise versa) so it __isn't affected by configuration changes__, such as recreating an activity when rotating the device. 
@@ -110,6 +115,9 @@ ViewModel ====> Repository (mediator) ====> data sources (persistent models, web
 
 define more narrower interface (function): 'get(id)', 'find(id)', 'add(entity)'
 
+__coordinating persistent logic__ such as if data is stale, request to the remote API, if cache data is available, use cache instead of sending an API request.
+
+
 ##### cache (in-memory)
 
 use cache once you fetch the data from api because:
@@ -150,6 +158,8 @@ mapping with a table of database.
 a Repository can use a DAO but a DAO cannot use a Repository since DAO is lower level concept.
 
 define basic method like 'save', 'update', 'load'
+
+__IMPORTANT__: DAO is only for the Room database and abstract local database logic (a one of persistence system), but Repository abstract any persistent logic (the whole persistence system such as local database, remote API, and cache).
 
 ##### Flow with Room
 
