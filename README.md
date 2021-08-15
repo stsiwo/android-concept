@@ -276,6 +276,20 @@ a data storage solution that allows you to store key-value paris or typed object
 
 an API taht makes it easy to schedule reliable, asynchronous tasks that are expected to run even if the app exists or the device restarts.
 
+mainly used for deferrable background work.
+
+used for the tasks which must complete eventually.
+
+by default it does your task synchronously.
+
+use cases:
+
+1. uploading logs
+2. applying filters to images and saving the image
+3. periodically syncing local data with the network. 
+
+you can use this with coroutine to run your task asynchronously. in this case, you need to use _CoroutineWorker_ class.
+
 #### Features
 
 1. Work constraints: give a constraint when the schedules task is executed (e.g., when wifi is available)
@@ -652,7 +666,7 @@ OS might kill some app processes to make room for new ones at any time.
 
 a thread to run your app.
    
-__main-safety__: it doesn't block UI updates on the main thread.
+__main-safety__: it doesn't block UI updates on the main thread. automatically switch its context internally so you can even call a main-safety function on Dispatchers.Main. esp, Room and Retrofit automatically switch its context with a custom dispatcher (they don't use Dispatchers.IO).
    
 ## Annotation
    
