@@ -169,21 +169,33 @@ a light-weight version of threads
 
 a function with _suspend_ keyword. you can use this function inside a coroutine.
 
-## dispatcher
+### dispatcher
 
 decide which thread or threads the corrsponding coroutine uses to execute its execution. for example, it can confine a given execution to be run on a specific thread, send it to thread pool, or run on the main thread.
 
-### default (Dispatchers.Default)
+#### default (Dispatchers.Default)
 
 limited to the number of CPU cores (with a minimum of 2) so only N (where N == cpu cores) tasks can run in parallel in this dispatcher.
 
 is intended for CPU intensive tasks, where there is little or no sleep.
 
-### IO (Dispatcher.IO)
+#### IO (Dispatcher.IO)
 
 by default 64 threads, so there could be up to 64 parallel tasks running on that dispatcher.
 
 spends a lot of time waiting.
+
+### context switching
+
+switching execution contex based on its task
+
+1. update LiveData and the UI on __Dispatchers.Main__.
+2. do database and network operations on __Dispatchers.IO__.
+3. anything else on __Dispatchers.Default__.
+
+how to switch to a specific context when we I have a specific task?
+
+use _withContext(<DISPATCHER>)_.
 
 ### coroutineScope
 
