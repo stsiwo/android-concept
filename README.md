@@ -718,8 +718,14 @@ use 'emit(..)' to return the result from async code
 __dispatcher__: decide which thread or threads the corrsponding coroutine uses to execute its execution. for example, it can confine a given execution to be run on a specific thread, send it to thread pool, or run on the main thread.
    
 Because coroutines can easily switch threads at any time and pass results back to the original thread, it's a good idea to start UI-related coroutines on the Main thread.
-  
  
+## Hilt (Dependency Injection library)
+   
+how to use Hilt on Android/Cotlin.
+   
+1. create a custom application class.
+2. extends 
+   
 ## Android UI Features
 
 ### pull-to-refresh
@@ -741,7 +747,6 @@ you can use a library for the feature: https://stackoverflow.com/questions/45834
 ### Android App Link 
    
    allow an app to designate itself as the default handler of application domain or URL. (API Level 23 or higher)
-
    
 ## Security
 
